@@ -20,10 +20,10 @@ def create_kafka_producer(options):
     return producer
 
 def create_message_data(metadata,data):
-	if metadata is not None:
-		return "%s::%s" % (metadata,data)
-	else:
-		return data
+    if metadata is not None:
+        return ("%s::%s" % (metadata,data))
+    else:
+        return data
 
 def flush_messages(producer):
 	print "flushing remaining messages before shutdown"
@@ -52,17 +52,16 @@ def main():
 	prepend a "metadata" string to each log line (kafka message will contain the string <metadata>:<log-line>).
 
 	set -l to the log file to be tailed. The log tailing supports log rotation.
-	set -s and -p to set the kafka server (ZK is no longer needed, multiple brokers to bootstrap from are not supported atm)
+	set -s and -p to set the kafka server (Multiple brokers to bootstrap from are not supported atm)
 	set -t <topic> to set the kafka topic to send
 
-    Batching is controlled by -bn and -bt:
-    set -bn to flush every n messages(default: 20)
-    set -bt to flush every t seconds (default: 5)
+    Batch messages:
+    set -b to flush every n messages(default: 20)
+    set -w to flush every t seconds (default: 5)
     Whichever condition is met first will trigger the flush
 
 	Advanced: If needed, use -d <delay> in order to control the tail delay - Unneeded in almost all cases.
 
-	NOTE: Currently expects kafka/ module to be in a folder parallel to this script.
 """)
 	parser.add_option("-s","--host",dest="host",default="localhost",
 	                help="kafka host")
@@ -98,6 +97,3 @@ def main():
 
 if __name__ == '__main__':
 	main()
-
-
-
